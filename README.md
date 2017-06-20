@@ -47,3 +47,26 @@ The DeViSE model described in the paper uses the simple hinge ranking loss, whic
 | - | - | - |
 | 500  | 66.82% | 71.81% |
 | 1000  | 67.48% | 72.39% |
+
+## Example ##
+Run get_wordnet_word2vec.py, which contains the following main codes.
+```python
+dataPath = '/mnt/brain3/datasets/extra/wiki_en/'
+inName = dataPath + 'enwiki-20170320-pages-articles-multistream.xml.bz2'
+textName = dataPath + 'corpus_wiki_en_wo_lemma.txt'
+modelName = './model_wo_lemma/wiki_en_word2vec_'
+vecName = './vec_wo_lemma/'
+epochs = 2
+embedSize = 1000
+
+make_wiki_en_corpus(inName, textName)
+
+for it in range(epochs):
+    logging.info(str(it+1) + '-th epoch starts')
+    model = Word2Vec(LineSentence(textName, sys.maxsize), size=embedSize, alpha=0.025, window=20, min_count=2, workers=5, iter=1);
+    make_word2vec(model, vecName, embedSize, it)
+    model.save(modelName + str(embedSize) + '.model')
+    model.accuracy('questions-words.txt')
+```
+
+Then, run deviseTest.m (by modifying some initial codes). Then, it will read labelMatrix.mat (which is word2vec of WordNet) and run learning of DeViSE model.
