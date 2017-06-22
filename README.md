@@ -48,7 +48,7 @@ The DeViSE model described in the paper uses the simple hinge ranking loss, whic
 | 500  | 66.82% | 71.81% |
 | 1000  | 67.48% | 72.39% |
 
-These results are slightly worse than that from softmax. This is expected result by the paper, and it will be discussed in the **[Comment](#Comment)**
+These results are slightly worse than that from softmax. This is expected result by the paper, and it will be discussed in the [Comment](#comment)
 
 ## Example ##
 Run get_wordnet_word2vec.py, which contains the following main codes.
