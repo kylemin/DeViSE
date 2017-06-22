@@ -38,15 +38,17 @@ labelMatrix = np.zeros((21838, embedSize))
 scipy.io.savemat('./vec/labelMatrix_' + str(embedSize) + '_' + str(it+1) +  '.mat', mdict={'labelMatrix': labelMatrix})
 ```
 ### The resulting word2vec of WordNet
-Even the latest Wikipedia dataset were used, 1578 categories were missed out of 21838 (while 78 were missed out of 1000 leaf categories of 2012). Missed categories can be filled by assigning same weights of their parents or the most closest neighborhood category.
+Even the latest Wikipedia dataset were used, 1578 categories were missed out of 21838 (while 78 were missed out of 1000 leaf categories of ILSVRC 2012). Missed categories can be filled by assigning same weights of their parents or the most closest neighborhood category.
 
 ## DeViSE ##
-The DeViSE model described in the paper uses the simple hinge ranking loss, which can be implemented efficiently by the matrix form of MATLAB. The following table shows the result of this implementation of DeviSE using obtained word2vec of WordNet (The epoch for word2vec is 2, which is different with that of the paper).
+The DeViSE model described in the paper uses the simple hinge ranking loss, which can be implemented efficiently by the matrix form of MATLAB. The following table shows the result of this implementation of DeviSE using obtained word2vec of WordNet (The epoch for word2vec is 2, which is different with that of the paper). Here, 78 out of 1000 leaf categories of ILSVRC 2012 were missed, so they were filled up by the above method.
 
 | Embedding Size  | Accuracy | Soft accuracy (@2) |
 | - | - | - |
 | 500  | 66.82% | 71.81% |
 | 1000  | 67.48% | 72.39% |
+
+These results are slightly worse than that from softmax. This is expected result by the paper, and it will be discussed in the [Comment](#Comment)
 
 ## Example ##
 Run get_wordnet_word2vec.py, which contains the following main codes.
@@ -70,3 +72,6 @@ for it in range(epochs):
 ```
 
 Then, run deviseTest.m (by modifying some initial codes). Then, it will read labelMatrix.mat (which is word2vec of WordNet) and run learning of DeViSE model.
+
+## Comment ##
+The most difficult part was getting the word2vec of WordNet. This is because there are many name of categories with multiple words, so pre-processing was tricky. Fortunately, this was mostly solved by utilizing built-in functions of python or its libraries, which is not the case of MATLAB. In the DeViSE paper, all the results were obtained by features of AlexNet. Here, features of VGG 16 were used. In this sense, the results seem reasonable enough. One thing I want to point out is that even if the whole wikipedia corpus was used, same as stated in the paper, 78 out of 1000 categories were missed. I could not figure out this is expected or not. I think that the paper might use another text source other than wikipedia.
