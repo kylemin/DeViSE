@@ -40,12 +40,15 @@ scipy.io.savemat('./vec/labelMatrix_' + str(embedSize) + '_' + str(it+1) +  '.ma
 ### The resulting word2vec of WordNet
 Even the latest Wikipedia dataset were used, 1387 categories were missing out of 21838 (while 20 were missing out of 1000 leaf categories of ILSVRC 2012). Missing categories can be filled by assigning same weights of their parents or the most closest neighborhood category if they have no common parent. 20 out of 1000 were filled by their common parent's weights.
 Here is a detailed description of 20 missing labels. They are 156th, 166th, 189th, 203th, 206th, 207th, 211th, 218th, 258th, 523th, 549th, 565th, 574th, 591th, 608th, 708th, 723th, 740th, 769th, 805th categories out of 1000. Here are a detailed description for some missing categories.
-* The 166th category is 'black-and-tan coonhound', which is written as 'Black and Tan Coonhound' in Wikipedia without hyphen. If you type this as 'black-and-tan coonhound', you cannot find this word in Wikipedia.
-* The 189th is 'wire-haired fox terrier', which is written as 'Wire Fox Terrier'. There is no hyphen and haird is missing, so it is required to manually modify this word.
+* The 166th category is 'black-and-tan coonhound', which is written as 'Black and Tan Coonhound' in Wikipedia **without hyphen**. If you type this as 'black-and-tan coonhound', you cannot find this word in Wikipedia.
+* The 189th is 'wire-haired fox terrier', which is written as 'Wire Fox Terrier'. There is no hyphen and haird is missing, so it is required to **manually match** this word.
 * The 523th is 'croquet ball', which cannot be found in Wikipedia. If you type 'croquet ball' in Wikipedia, the page would be re-directed to croquet, so you cannot find 'croquet ball'. Of course, you need to manually modify this.
 * The 565th is 'four-poster', which is written as 'Four-poster bed' in Wikipedia. Of course, you need to manually modify this.
+* The 591th is 'hand-held computer, hand-held microcomputer', which is written as 'Mobile device'.
+* The 608th is 'pay-phone, pay-station', which is written as 'Payphone'
+* The 723th is 'pinwheel'. **This has only one sentence**, so this word is considered as noise. This is because I set the minimum frequency of word as 2 (for the big corpus, this value should be higher to remove noises for building word2vec). Thus, this word should be dealt with particularly.
 
-It might be okay for someone to replace 20 missing categories to properly matched word for Wikipedia. However, it is quite cumbersome to replace 1387 missing categories to some proper words. There must be a related document or guideline for this problem, but I could not find it.
+It might be okay for someone to replace 20 missing categories to properly matched word for Wikipedia or to deal with them particularly. However, it is quite cumbersome to replace 1387 missing categories to some proper words. There must be a related document or guideline for this problem, but I could not find it.
 
 
 ## DeViSE ##
